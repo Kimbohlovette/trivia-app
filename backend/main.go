@@ -9,6 +9,7 @@ import (
 )
 
 type TriviaQuestion struct {
+	ID int `json:"id"`
 	Question string
 	Answer   string
 }
@@ -17,18 +18,22 @@ var triviaData = []TriviaQuestion{
 	{
 		Question: "What is the capital of France?",
 		Answer:   "Paris",
+		ID: 1,
 	},
 	{
 		Question: "What is the largest planet in our solar system?",
 		Answer:   "Jupiter",
+		ID: 2,
 	},
 	{
 		Question: "How many legs does a cat have?",
 		Answer:   "Four",
+		ID: 3,
 	},
 	{
 		Question: "What color is the sky?",
 		Answer:   "Blue",
+		ID: 4,
 	},
 	{
 		Question: "What is the opposite of hot?",
@@ -37,10 +42,12 @@ var triviaData = []TriviaQuestion{
 	{
 		Question: "What is the first day of the week?",
 		Answer:   "Monday",
+		ID: 5,
 	},
 	{
 		Question: "What is 2 + 2?",
 		Answer:   "4",
+		ID: 6,
 	},
 	{
 		Question: "What is the capital of the United States?",
@@ -49,10 +56,12 @@ var triviaData = []TriviaQuestion{
 	{
 		Question: "What is the tallest land animal?",
 		Answer:   "Giraffe",
+		ID: 7,
 	},
 	{
 		Question: "How many sides does a triangle have?",
 		Answer:   "Three",
+		ID: 8,
 	},
 }
 
@@ -70,6 +79,7 @@ func setupRouter() *gin.Engine {
 
 	r.POST("/api/v1/play", func(c *gin.Context) {
 		var payload struct {
+			ID int `json:"id"`
 			Answer string `json:"answer"`
 		}
 
@@ -80,7 +90,7 @@ func setupRouter() *gin.Engine {
 		isCorrectAnswer := false
 
 		for _, question := range triviaData {
-			if question.Answer == payload.Answer {
+			if question.Answer == payload.Answer && payload.ID == question.ID {
 				isCorrectAnswer = true
 				break
 			}
