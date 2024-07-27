@@ -16,10 +16,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
-}
-
-.content_section{
-    flex: 1;
 }
