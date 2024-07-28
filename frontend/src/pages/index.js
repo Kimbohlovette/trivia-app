@@ -3,12 +3,29 @@ import Head from "next/head";
 import TakeQuizButton from "@/components/take_quiz_button";
 import styles from "@/styles/home_styles.module.css";
 import AnswerQuiz from "@/components/answer_quiz";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import QuizResult from "@/components/quiz_result";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 export default function Home() {
 	const [content, setContent] = useState("");
+	const [answer, setAnswer] = useState("");
+	const [quiz, setQuiz] = useState(null);
+
+	useEffect(() => {
+		if (content === "show-quiz") {
+			fetch("http://localhost:8080/api/v1/quiz")
+				.then((response) => {
+					response.json().then((quiz) => {
+						setQuiz(quiz);
+						setContent("show-quiz");
+					});
+				})
+				.catch((error) => {
+					console.error("Error fetching quiz data:", error);
+				});
+		}
+	}, [content]);
 
 	return (
 		<>
@@ -33,12 +50,18 @@ export default function Home() {
 							/>
 						</div>
 						<div className="container">
-							{content === "show-quiz" && (
+							{content === "show-quiz" && quiz && (
 								<AnswerQuiz
-									question={"Lorem text from nowhere?"}
+									quiz={quiz}
+									onSettled={(answer) => {
+										setAnswer(answer);
+										setContent("show-result");
+									}}
 								/>
 							)}
-							{content === "show-result" && <QuizResult />}
+							{content === "show-result" && (
+								<QuizResult answer={answer} />
+							)}
 							{!content && (
 								<p className="text">
 									Welcome to the Quiz App! Click the button
