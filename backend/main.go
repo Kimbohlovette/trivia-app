@@ -4,14 +4,15 @@ import (
 	"math/rand"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
 
 type TriviaQuestion struct {
 	ID int `json:"id"`
-	Question string
-	Answer   string
+	Question string `json:"question"`
+	Answer   string `json:"answer"`
 }
 
 var triviaData = []TriviaQuestion{
@@ -68,6 +69,10 @@ var triviaData = []TriviaQuestion{
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 
+	config := cors.DefaultConfig()
+    config.AllowOrigins = []string{"*"}
+	r.Use(cors.New(config))
+
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
@@ -77,7 +82,7 @@ func setupRouter() *gin.Engine {
 		c.JSON(http.StatusOK, randQuestion)
 	})
 
-	r.POST("/api/v1/play", func(c *gin.Context) {
+	r.POST("/api/v1/answer_quiz", func(c *gin.Context) {
 		var payload struct {
 			ID int `json:"id"`
 			Answer string `json:"answer"`
