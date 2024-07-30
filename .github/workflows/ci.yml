@@ -7,5 +7,4 @@ jobs:
     steps:
       - name: Eslint-checks
         uses: actions/checkout@v4
-      - run: cd ./frontend
-      - run: npm run lint
+      - run: cd ./frontend && npm run lint
