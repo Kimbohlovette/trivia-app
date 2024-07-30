@@ -14,7 +14,7 @@ const QuizResult = (props) => {
 				{!props.answer && (
 					<div>
 						{/* <IoIosCloseCircle /> */}
-						<p>Opps it's not correct!</p>
+						<p>Opps it&apos;s not correct!</p>
 					</div>
 				)}
 			</div>
