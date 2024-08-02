@@ -1,12 +1,13 @@
 package main
 
 import (
-	"math/rand"
 	"net/http"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"golang.org/x/exp/rand"
 )
 
 type TriviaQuestion struct {
@@ -95,7 +96,7 @@ func setupRouter() *gin.Engine {
 		isCorrectAnswer := false
 
 		for _, question := range triviaData {
-			if question.Answer == payload.Answer && payload.ID == question.ID {
+			if strings.ToLower(question.Answer) == payload.Answer && payload.ID == question.ID {
 				isCorrectAnswer = true
 				break
 			}
