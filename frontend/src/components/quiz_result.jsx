@@ -1,5 +1,4 @@
 import React from "react";
-import { FaCircleCheck, IoIosCloseCircle } from "react-icons/fa6";
 const QuizResult = (props) => {
 	return (
 		<div>
