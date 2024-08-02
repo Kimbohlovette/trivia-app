@@ -1,6 +1,9 @@
 import SubmitButton from "@/components/submit_button";
 import InputField from "./input_field";
 import { useEffect, useState } from "react";
+
+export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const AnswerQuiz = (props) => {
 	const [answer, setAnswer] = useState("");
 	useEffect(() => {
@@ -8,7 +11,7 @@ const AnswerQuiz = (props) => {
 	}, [props.quiz]);
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		fetch("http://localhost:8080/api/v1/answer_quiz", {
+		fetch(`${BASE_URL}/api/v1/answer_quiz`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

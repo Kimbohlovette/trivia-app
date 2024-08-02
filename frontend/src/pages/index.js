@@ -6,6 +6,8 @@ import AnswerQuiz from "@/components/answer_quiz";
 import { useEffect, useState } from "react";
 import QuizResult from "@/components/quiz_result";
 
+export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 export default function Home() {
 	const [content, setContent] = useState("");
@@ -14,7 +16,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (content === "show-quiz") {
-			fetch("http://localhost:8080/api/v1/quiz")
+			fetch(`${BASE_URL}/api/v1/quiz`)
 				.then((response) => {
 					response.json().then((quiz) => {
 						setQuiz(quiz);
