@@ -13,7 +13,10 @@ const AnswerQuiz = (props) => {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ answer: answer, id: props.quiz.id }),
+			body: JSON.stringify({
+				answer: answer.toLowerCase(),
+				id: props.quiz.id,
+			}),
 		})
 			.then((response) => {
 				setAnswer("");
