@@ -53,6 +53,7 @@ export default function Home() {
 					<div>
 						<TakeQuizButton
 							onClick={() => setContent("show-quiz")}
+							disabled={isLoading}
 						/>
 						<div className="mt-8">
 							{content === "show-quiz" && quiz && !isLoading && (
