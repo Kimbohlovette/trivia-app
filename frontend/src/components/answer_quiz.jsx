@@ -6,11 +6,11 @@ export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const AnswerQuiz = (props) => {
 	const [answer, setAnswer] = useState("");
-	useEffect(() => {
-		console.log(props.quiz);
-	}, [props.quiz]);
+	const [isLoading, setIsLoading] = useState(false);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 		fetch(`${BASE_URL}/api/v1/answer_quiz`, {
 			method: "POST",
 			headers: {
@@ -29,20 +29,32 @@ const AnswerQuiz = (props) => {
 			})
 			.catch((error) => {
 				console.error("Error answering quiz:", error);
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
 	};
 	return (
-		<form onSubmit={handleSubmit} className="container">
-			<p className="text">{props.quiz.question}</p>
-			<InputField
-				onChange={(e) => {
-					setAnswer(e.target.value);
-				}}
-				value={answer}
-				placeholder="Enter your answer..."
-			/>
-			<SubmitButton />
-		</form>
+		<>
+			{isLoading ? (
+				<p>Processing answer ...</p>
+			) : (
+				<form onSubmit={handleSubmit} className="">
+					<p className="text-gray-600">{props.quiz.question}</p>
+					<div className="flex items-center py-5 gap-4">
+						<InputField
+							onChange={(e) => {
+								setAnswer(e.target.value);
+							}}
+							value={answer}
+							placeholder="Enter your answer..."
+							disabled={isLoading}
+						/>
+						<SubmitButton disabled={!answer || isLoading} />
+					</div>
+				</form>
+			)}
+		</>
 	);
 };
 

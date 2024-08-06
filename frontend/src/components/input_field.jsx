@@ -11,7 +11,7 @@ const InputField = (props) => {
 			placeholder={props.placeholder}
 			required={props.required}
 			disabled={props.disabled}
-			className="input_field"
+			className="border focus:outline-none py-2 px-4 rounded-sm"
 		/>
 	);
 };

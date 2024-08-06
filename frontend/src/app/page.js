@@ -1,7 +1,7 @@
+"use client";
 import { Poppins } from "next/font/google";
 import Head from "next/head";
 import TakeQuizButton from "@/components/take_quiz_button";
-import styles from "@/styles/home_styles.module.css";
 import AnswerQuiz from "@/components/answer_quiz";
 import { useEffect, useState } from "react";
 import QuizResult from "@/components/quiz_result";
@@ -13,9 +13,11 @@ export default function Home() {
 	const [content, setContent] = useState("");
 	const [answer, setAnswer] = useState("");
 	const [quiz, setQuiz] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		if (content === "show-quiz") {
+			setIsLoading(true);
 			fetch(`${BASE_URL}/api/v1/quiz`)
 				.then((response) => {
 					response.json().then((quiz) => {
@@ -25,6 +27,9 @@ export default function Home() {
 				})
 				.catch((error) => {
 					console.error("Error fetching quiz data:", error);
+				})
+				.finally(() => {
+					setIsLoading(false);
 				});
 		}
 	}, [content]);
@@ -43,16 +48,14 @@ export default function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className={[styles.home, poppins]}>
-				<div className={[styles.app_container]}>
-					<div className="flex_col">
-						<div className="container">
-							<TakeQuizButton
-								onClick={() => setContent("show-quiz")}
-							/>
-						</div>
-						<div className="container">
-							{content === "show-quiz" && quiz && (
+			<main className="h-screen grid place-items-center bg-white">
+				<div className="h-[500px] aspect-video border py-5 px-4 flex flex-col justify-center">
+					<div>
+						<TakeQuizButton
+							onClick={() => setContent("show-quiz")}
+						/>
+						<div className="mt-8">
+							{content === "show-quiz" && quiz && !isLoading && (
 								<AnswerQuiz
 									quiz={quiz}
 									onSettled={(answer) => {
@@ -61,11 +64,12 @@ export default function Home() {
 									}}
 								/>
 							)}
+							{isLoading && <p>Loading quiz ...</p>}
 							{content === "show-result" && (
 								<QuizResult answer={answer} />
 							)}
 							{!content && (
-								<p className="text">
+								<p className="text-lg font-semibold">
 									Welcome to the Quiz App! Click the button
 									above to take a quiz.
 								</p>

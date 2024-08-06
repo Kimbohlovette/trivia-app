@@ -1,13 +1,13 @@
 import React from "react";
 const QuizResult = (props) => {
 	return (
-		<div>
-			<h1>Result</h1>
-			<div>
+		<div className="flex flex-col gap-2">
+			<h1 className="font-semibold text-gray-900">Result</h1>
+			<div className="">
 				{!!props.answer && (
 					<div>
 						{/* <FaCircleCheck /> */}
-						<p>You got it!</p>
+						<p>Great! You got it right!</p>
 					</div>
 				)}
 				{!props.answer && (
