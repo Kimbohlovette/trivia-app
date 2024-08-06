@@ -48,8 +48,8 @@ export default function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className="h-screen grid place-items-center bg-white">
-				<div className="h-[500px] aspect-video border py-5 px-4 flex flex-col justify-center">
+			<main className="h-screen grid place-items-center bg-white p-2 sm:px-4">
+				<div className="w-full max-w-screen-md aspect-video border py-5 px-4 flex flex-col justify-center">
 					<div>
 						<TakeQuizButton
 							onClick={() => setContent("show-quiz")}
